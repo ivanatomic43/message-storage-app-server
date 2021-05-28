@@ -13,16 +13,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -50,15 +41,15 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Message> myMessages = new ArrayList<>();
 
+    public User() {
+    }
+
     public User(String n, String s, String email, String phone, String pass) {
         this.firstName = n;
         this.lastName = s;
         this.email = email;
         this.phoneNumber = phone;
         this.password = pass;
-    }
-
-    public User() {
     }
 
     /**
