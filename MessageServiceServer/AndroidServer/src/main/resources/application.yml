@@ -1,0 +1,22 @@
+server: 
+  port: 8080
+  servlet:
+    contextPath: /server
+
+
+  
+spring: 
+  application: 
+    name: user
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true 
+  datasource: 
+    url: jdbc:mysql://localhost:3306/messageservice_db?useSSL=false&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: ivana123
+    initialization-mode: always
