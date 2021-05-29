@@ -20,3 +20,5 @@ spring:
     username: root
     password: ivana123
     initialization-mode: always
+
+
