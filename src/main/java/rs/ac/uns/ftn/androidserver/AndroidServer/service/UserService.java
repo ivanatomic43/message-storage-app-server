@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.androidserver.AndroidServer.dto.LoginParams;
@@ -19,6 +20,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User findOneById(Integer id) {
         return userRepository.findOneById(id);
@@ -59,7 +63,7 @@ public class UserService implements UserDetailsService {
         u.setLastName(user.getLastName());
         u.setEmail(user.getEmail());
         u.setPhoneNumber(user.getPhoneNumber());
-        u.setPassword(user.getPassword());
+        u.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(u);
 
         return u;
