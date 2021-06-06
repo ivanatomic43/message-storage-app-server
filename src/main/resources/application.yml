@@ -3,7 +3,8 @@ server:
   servlet:
     contextPath: /server
 
-
+jwt:
+  secret: javainuse
   
 spring: 
   application: 

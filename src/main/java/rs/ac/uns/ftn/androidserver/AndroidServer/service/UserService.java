@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.androidserver.AndroidServer.dto.LoginParams;
@@ -12,7 +15,7 @@ import rs.ac.uns.ftn.androidserver.AndroidServer.model.User;
 import rs.ac.uns.ftn.androidserver.AndroidServer.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -63,26 +66,32 @@ public class UserService {
 
     }
 
-    // edit this, insert token
-    public LoginParams login(LoginParams login) {
+    public User findOneByEmail(String email) {
 
         List<User> userList = userRepository.findAll();
 
         for (User u : userList) {
-            System.out.println(u.getEmail());
-            System.out.println(u.getPassword());
-            System.out.println(login.getEmail());
-            System.out.println(login.getPassword());
-            if (u.getEmail().equals(login.getEmail()) && u.getPassword().equals(login.getPassword())) {
-                LoginParams params = new LoginParams();
-                params.setEmail(u.getEmail());
-                params.setAccessToken(u.getPassword());
-
-                return params;
+            if (u.getEmail().equals(email)) {
+                return u;
             }
         }
-
         return null;
 
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        List<User> userList = userRepository.findAll();
+
+        for (User u : userList) {
+            if (u.getEmail().equals(email)) {
+
+                return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(),
+                        new ArrayList<>());
+            }
+        }
+        return null;
+
+    }
+
 }
