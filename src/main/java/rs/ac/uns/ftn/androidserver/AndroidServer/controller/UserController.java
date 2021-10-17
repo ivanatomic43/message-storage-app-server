@@ -27,10 +27,6 @@ public class UserController {
     public ResponseEntity<?> getAll() {
 
         List<UserDTO> userList = userService.findAll();
-
-        for (UserDTO u : userList) {
-            System.out.println("user id:" + u.getId());
-        }
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
